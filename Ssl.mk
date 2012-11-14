@@ -50,13 +50,14 @@ local_src_files:= \
 
 local_c_includes += $(log_c_includes)
 
+local_additional_dependencies := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Ssl.mk
+
 #######################################
 # target static library
 include $(CLEAR_VARS)
 include $(LOCAL_PATH)/android-config.mk
 
 ifeq ($(TARGET_ARCH),arm)
-LOCAL_NDK_VERSION := 5
 LOCAL_SDK_VERSION := 9
 endif
 LOCAL_SRC_FILES += $(local_src_files)
@@ -64,6 +65,7 @@ LOCAL_C_INCLUDES += $(local_c_includes)
 LOCAL_SHARED_LIBRARIES = $(log_shared_libraries)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE:= libssl_static
+LOCAL_ADDITIONAL_DEPENDENCIES := $(local_additional_dependencies)
 include $(BUILD_STATIC_LIBRARY)
 
 #######################################
@@ -72,7 +74,6 @@ include $(CLEAR_VARS)
 include $(LOCAL_PATH)/android-config.mk
 
 ifeq ($(TARGET_ARCH),arm)
-LOCAL_NDK_VERSION := 5
 LOCAL_SDK_VERSION := 9
 endif
 LOCAL_SRC_FILES += $(local_src_files)
@@ -80,6 +81,7 @@ LOCAL_C_INCLUDES += $(local_c_includes)
 LOCAL_SHARED_LIBRARIES += libcrypto $(log_shared_libraries)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE:= libssl
+LOCAL_ADDITIONAL_DEPENDENCIES := $(local_additional_dependencies)
 include $(BUILD_SHARED_LIBRARY)
 
 #######################################
@@ -91,6 +93,7 @@ LOCAL_C_INCLUDES += $(local_c_includes)
 LOCAL_SHARED_LIBRARIES += libcrypto $(log_shared_libraries)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE:= libssl
+LOCAL_ADDITIONAL_DEPENDENCIES := $(local_additional_dependencies)
 include $(BUILD_HOST_SHARED_LIBRARY)
 
 #######################################
@@ -102,4 +105,5 @@ LOCAL_C_INCLUDES += $(local_c_includes)
 LOCAL_SHARED_LIBRARIES := libssl libcrypto $(log_shared_libraries)
 LOCAL_MODULE:= ssltest
 LOCAL_MODULE_TAGS := optional
+LOCAL_ADDITIONAL_DEPENDENCIES := $(local_additional_dependencies)
 include $(BUILD_EXECUTABLE)
